@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div>
+  <div class="border">
+    <div class="header">
+      <h1 class="word">Login</h1>
+    </div>
+    <h2 class="word">
+      <form action="{{ url_for('login') }}" method="post">
+        <div class="msg">{{ msg }}</div>
+        <input id="username" name="username" type="text" placeholder="Enter Your Username" />
+        </br></br>
+        <input id="password" name="password" type="password" placeholder="Enter Your Password" />
+        </br></br>
+        <input class="btn-primary" type="submit" value="Sign In">
+        </br>
+      </form>
+    </h2>
+    <p class="bottom">Don't have an account? <a class="stretched-link" href="{{url_for('register')}}"> Sign Up here</a></p>
+  </div>
+</div>
+
+{% endblock %}

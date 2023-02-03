@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div>
+  <div class="border">
+    <h1 class="bottom">
+      Hi {{session.username}}!</br></br> Welcome to the most boring app in the world &#128578;
+    </h1>
+    </br>
+    <div>
+      <div>
+        <p>First name: {{user[3]}}</p>
+        <p>Last name: {{user[4]}}</p>
+        <p>Email: {{user[5]}}</p>
+      </div>
+    </div>
+    <a class="stretched-link" href="{{ url_for('logout') }}" class="btn">Logout</a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div>
+  <div class="border">
+    <div class="header">
+      <h1 class="word">Register</h1>
+    </div>
+    <h2 class="word">
+      <form action="{{ url_for('register') }}" method="post">
+        <div class="msg">{{msg}}</div>
+        <input id="username" name="username" type="text" placeholder="Enter Username" class="textbox" />
+        </br></br>
+        <input id="password" name="password" type="password" placeholder="Enter Password" class="textbox" />
+        </br></br>
+        <input id="first_name" name="first_name" type="text" placeholder="Enter First Name" class="textbox" />
+        </br></br>
+        <input id="last_name" name="last_name" type="text" placeholder="Enter Last Name" class="textbox" />
+        </br></br>
+        <input id="email" name="email" type="email" placeholder="Enter Email" class="textbox" />
+        </br></br>
+        <input class="btn-primary" type="submit" class="btn" value="Sign Up">
+        </br>
+      </form>
+    </h2>
+    <p class="bottom">Already have an account? <a class="stretched-link" href="{{url_for('login')}}"> Sign In here</a></p>
+  </div>
+</div>
+
+{% endblock %}
