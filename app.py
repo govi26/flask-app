@@ -1,3 +1,4 @@
+import pathlib
 import re
 from flask import Flask, g, render_template, request, redirect, url_for, session
 import sqlite3
@@ -6,15 +7,15 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
-
 app.debug = True
 
 def get_db_connection():
   if not hasattr(g, 'db_connection'):
     try:
-      g.db_connection = sqlite3.connect('flaskapp_db.sql')
+      dir_path = pathlib.Path(__file__).parent.resolve()
+      g.db_connection = sqlite3.connect('{}/flaskapp_db.sql'.format(dir_path))
     except Exception as error:
-      print(f'Error: {error}')
+      print('Error: {}'.format(error))
       raise error
   return g.db_connection
 
@@ -22,7 +23,7 @@ def get_db_cursor():
   try:
     connection = get_db_connection()
   except Exception as error:
-    print(f'Error: {error}')
+    print('Error: {}'.format(error))
     raise error
   return connection.cursor()
 
