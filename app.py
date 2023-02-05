@@ -1,6 +1,6 @@
 import pathlib
 import re
-from flask import Flask, g, render_template, request, redirect, url_for, session
+from flask import Flask, g, render_template, request, redirect, url_for, session, Response
 import sqlite3
 
 
@@ -64,13 +64,21 @@ def dashboard():
     return redirect(url_for('login'))
   cursor = get_db_cursor()
   cursor.execute('SELECT * FROM user WHERE id=?', (session['id'],))
-  user = cursor.fetchone()
+  user = list(cursor.fetchone())
+  user[6] = len((user[6] or '').split())
   return render_template('dashboard.html', user=user)
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
   msg = ''
+  file_content = ''
   if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+    if 'txtfile' in request.files:
+      try:
+        file_content = request.files['txtfile'].read().decode("utf-8")
+      except Exception as error:
+        print('Error: {}'.format(error))
+
     username = request.form['username']
     password = request.form['password']
     first_name = request.form['first_name']
@@ -90,7 +98,10 @@ def register():
     elif not username or not password or not email:
       msg = 'Please fill out the form correctly!'
     else:
-      cursor.execute('INSERT INTO user VALUES (NULL, ?, ?, ?, ?, ?)', (username, password, first_name, last_name, email))
+      cursor.execute(
+        'INSERT INTO user VALUES (NULL, ?, ?, ?, ?, ?, ?)', 
+        (username, password, first_name, last_name, email, file_content)
+      )
       get_db_connection().commit()
       msg = 'You have successfully registered!'
       session['loggedin'] = True
@@ -101,6 +112,16 @@ def register():
     msg = 'Please fill out the form!'
   return render_template('register.html', msg=msg)
 
+@app.route('/download')
+def download():
+  cursor = get_db_cursor()
+  cursor.execute('SELECT * FROM user WHERE id=?', (session['id'],))
+  user = list(cursor.fetchone())
+  return Response(
+    user[6],
+    mimetype='text/plain',
+    headers={'Content-disposition': 'attachment; filename=hello.txt'}
+  )
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=80)
