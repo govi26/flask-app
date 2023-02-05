@@ -8,7 +8,7 @@
       <h1 class="word">Register</h1>
     </div>
     <h2 class="word">
-      <form action="{{ url_for('register') }}" method="post">
+      <form action="{{ url_for('register') }}" method="post" enctype="multipart/form-data">
         <div class="msg">{{msg}}</div>
         <input id="username" name="username" type="text" placeholder="Enter Username" class="textbox" />
         </br></br>
@@ -19,6 +19,8 @@
         <input id="last_name" name="last_name" type="text" placeholder="Enter Last Name" class="textbox" />
         </br></br>
         <input id="email" name="email" type="email" placeholder="Enter Email" class="textbox" />
+        </br></br>
+        <input type="file" id="txtfile" name="txtfile">
         </br></br>
         <input class="btn-primary" type="submit" class="btn" value="Sign Up">
         </br>
