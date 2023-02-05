@@ -1,4 +1,4 @@
 import sys
-sys.path.insert(0, '/var/www/html/simple_flask_app')
+sys.path.insert(0, '/var/www/html/flaskapp')
 
-from simple_flask_app import app as application
+import app as application

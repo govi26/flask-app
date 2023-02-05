@@ -12,7 +12,7 @@ app.debug = True
 def get_db_connection():
   if not hasattr(g, 'db_connection'):
     try:
-      g.db_connection = sqlite3.connect('flask_app.sql')
+      g.db_connection = sqlite3.connect('flaskapp_db.sql')
     except Exception as error:
       print(f'Error: {error}')
       raise error
